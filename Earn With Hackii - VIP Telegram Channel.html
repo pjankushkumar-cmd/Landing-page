@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="hi" class="h-full overflow-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EARN WITH HACKII - Official VIP Telegram Channel</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#030712',
+                        cardbg: 'rgba(15, 23, 42, 0.78)',
+                        tgBlue: '#24A1DE',
+                        neonGreen: '#00ff88',
+                        brandGreen: '#10b981',
+                        neonCyan: '#06b6d4'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 1.8s infinite alternate',
+                        'float': 'float 4s ease-in-out infinite',
+                        'radar': 'radar 3s linear infinite'
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 15px rgba(0, 255, 136, 0.4), 0 0 30px rgba(0, 255, 136, 0.2)' },
+                            '100%': { boxShadow: '0 0 35px rgba(0, 255, 136, 0.9), 0 0 60px rgba(0, 255, 136, 0.5)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-6px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Strict No-Scroll Screen Fitting */
+        html, body {
+            height: 100%;
+            max-height: 100vh;
+            overflow: hidden !important;
+            touch-action: manipulation;
+            background-color: #030712;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Glassmorphism Styling */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-panel-highlight {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.08));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        /* Canvas Overlay */
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Neon Glow Button */
+        .cta-pulse-button {
+            animation: pulseGlow 2s infinite alternate;
+            background: linear-gradient(135deg, #00ff88 0%, #10b981 50%, #06b6d4 100%);
+        }
+
+        .cta-pulse-button:hover {
+            filter: brightness(1.15);
+        }
+
+        /* Custom Scrollbar for Modal inside */
+        .modal-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-scroll::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="relative h-screen max-h-screen flex flex-col justify-between overflow-hidden text-slate-100">
+
+    <!-- Interactive Trading Line & Particle Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Top Urgency Banner -->
+    <header class="relative z-20 w-full bg-slate-900/90 border-b border-emerald-500/30 py-1.5 px-3 backdrop-blur-md">
+        <div class="max-w-4xl mx-auto flex items-center justify-between text-[11px] sm:text-xs font-bold tracking-wide">
+            
+            <div class="flex items-center gap-1.5 text-yellow-400">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+                </span>
+                <span>🔥 VIP SPOTS LEFT TODAY: <span id="spots-count" class="text-white font-extrabold bg-red-600/80 px-1.5 py-0.2 rounded">11</span></span>
+            </div>
+
+            <div class="text-slate-200 font-mono flex items-center gap-1.5">
+                <span class="text-slate-400 hidden xs:inline">FREE ACCESS ENDS IN:</span>
+                <span id="timer-display" class="bg-black/60 px-2 py-0.5 rounded border border-emerald-500/40 text-neonGreen font-mono font-bold">04:58</span>
+            </div>
+
+            <div class="hidden sm:flex items-center gap-1 text-emerald-400 font-extrabold text-[11px]">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>100% GUARANTEED ACCURACY</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN HERO CONTENT CONTAINER -->
+    <main class="relative z-10 flex-1 max-w-2xl w-full mx-auto px-3 py-2 sm:py-4 flex flex-col justify-center items-center text-center">
+        
+        <!-- Main Glass Card -->
+        <div class="glass-panel w-full rounded-3xl p-4 sm:p-6 shadow-2xl border border-slate-700/60 relative overflow-hidden">
+            
+            <!-- Glow Accent Blur behind card -->
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-neonGreen/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-neonCyan/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Title & Verified VIP Badge -->
+            <div class="mb-3 flex items-center justify-center gap-2">
+                <div class="relative flex items-center justify-center">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-tgBlue flex items-center justify-center text-white text-lg font-black shadow-lg shadow-emerald-500/30">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <span class="absolute -bottom-1 -right-1 bg-emerald-500 text-slate-950 text-[9px] font-black px-1 rounded-full border border-slate-900">VIP</span>
+                </div>
+
+                <div class="text-left">
+                    <div class="flex items-center gap-1.5">
+                        <h1 class="font-display text-xl sm:text-3xl font-black tracking-tight text-white uppercase">
+                            EARN WITH <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonGreen via-emerald-400 to-neonCyan">HACKII</span>
+                        </h1>
+                        <i class="fa-solid fa-circle-check text-tgBlue text-sm sm:text-base" title="Official Verified Badge"></i>
+                    </div>
+                    <p class="text-[10px] sm:text-xs text-slate-400 font-semibold tracking-wider uppercase">Official Signals & Trading Community</p>
+                </div>
+            </div>
+
+            <!-- 2 BIG HIGHLIGHTED BADGES (Simple Hinglish) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 sm:mb-4">
+                
+                <!-- Badge 1: Verified Signals -->
+                <div class="glass-panel-highlight rounded-xl p-2.5 flex items-center gap-2.5 text-left border border-emerald-500/40">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-neonGreen flex items-center justify-center text-base shrink-0 border border-emerald-500/30">
+                        <i class="fa-solid fa-shield-virus"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-extrabold text-white flex items-center gap-1">
+                            <span>✅ 100% VERIFIED SIGNALS</span>
+                        </h4>
+                        <p class="text-[10px] text-slate-300 font-medium">100% Tested & Safe Daily Signals</p>
+                    </div>
+                </div>
+
+                <!-- Badge 2: High Winning Rate -->
+                <div class="glass-panel-highlight rounded-xl p-2.5 flex items-center gap-2.5 text-left border border-cyan-500/40">
+                    <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-neonCyan flex items-center justify-center text-base shrink-0 border border-cyan-500/30">
+                        <i class="fa-solid fa-bolt-lightning"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-extrabold text-white flex items-center gap-1">
+                            <span>🔥 HIGH WINNING (98% WIN RATE)</span>
+                        </h4>
+                        <p class="text-[10px] text-slate-300 font-medium">Ghar Baithe Daily Profit Guarantee</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Hinglish Subheadline -->
+            <p class="text-slate-200 text-xs sm:text-sm mb-4 leading-relaxed font-medium max-w-lg mx-auto">
+                Koi risk nahi! Daily hamare <span class="text-neonGreen font-bold">Free VIP Telegram</span> me exact signals aur loots mileinge. Copy karo aur direct account me profit nikalo!
+            </p>
+
+            <!-- 3 Simple Step Process -->
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <div class="bg-slate-900/80 rounded-xl p-2 border border-slate-800 text-center">
+                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-neonGreen mx-auto text-xs font-bold flex items-center justify-center mb-1">1</div>
+                    <p class="text-white text-[11px] font-bold">Free Join Karo</p>
+                    <p class="text-slate-400 text-[9px]">Click & Join Link</p>
+                </div>
+
+                <div class="bg-slate-900/80 rounded-xl p-2 border border-slate-800 text-center">
+                    <div class="w-6 h-6 rounded-full bg-cyan-500/20 text-neonCyan mx-auto text-xs font-bold flex items-center justify-center mb-1">2</div>
+                    <p class="text-white text-[11px] font-bold">Signals Copy Karo</p>
+                    <p class="text-slate-400 text-[9px]">100% Tested Signals</p>
+                </div>
+
+                <div class="bg-slate-900/80 rounded-xl p-2 border border-slate-800 text-center">
+                    <div class="w-6 h-6 rounded-full bg-yellow-500/20 text-yellow-400 mx-auto text-xs font-bold flex items-center justify-center mb-1">3</div>
+                    <p class="text-white text-[11px] font-bold">Daily Profit Withdraw</p>
+                    <p class="text-slate-400 text-[9px]">Direct UPI & Bank</p>
+                </div>
+            </div>
+
+            <!-- MAIN PULSING TELEGRAM CTA BUTTON -->
+            <div class="w-full mb-3">
+                <a href="https://t.me/+mNtpndjOcOsyZWFl" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   onclick="playClickSound()"
+                   class="cta-pulse-button w-full py-3.5 sm:py-4 px-6 text-slate-950 font-black text-xs sm:text-base rounded-2xl shadow-2xl flex items-center justify-center gap-3 transition-transform transform active:scale-95 border-2 border-emerald-200 tracking-wide">
+                    <i class="fa-brands fa-telegram text-2xl sm:text-3xl text-slate-950"></i>
+                    <span>JOIN VIP TELEGRAM CHANNEL FOR FREE</span>
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </a>
+            </div>
+
+            <!-- Trust Subtext -->
+            <div class="flex items-center justify-center gap-4 text-[10px] sm:text-xs text-slate-400 font-semibold mb-3">
+                <span class="flex items-center gap-1 text-emerald-400"><i class="fa-solid fa-lock-open"></i> ₹0 Joining Fees</span>
+                <span>•</span>
+                <span class="flex items-center gap-1 text-cyan-400"><i class="fa-solid fa-bolt"></i> Instant VIP Access</span>
+            </div>
+
+            <!-- Trust Metrics Bar -->
+            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-800 text-center">
+                <div>
+                    <p class="text-white font-extrabold text-xs sm:text-sm">50,000+</p>
+                    <p class="text-slate-400 text-[9px]">Active Members</p>
+                </div>
+                <div class="border-x border-slate-800">
+                    <p class="text-neonGreen font-extrabold text-xs sm:text-sm">98%</p>
+                    <p class="text-slate-400 text-[9px]">Accuracy Rate</p>
+                </div>
+                <div>
+                    <p class="text-yellow-400 font-extrabold text-xs sm:text-sm">₹0 Fee</p>
+                    <p class="text-slate-400 text-[9px]">100% Free Forever</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- How It Works Button Modal Opener -->
+        <button onclick="toggleHelpModal(true); playClickSound();" class="mt-3 text-xs text-slate-400 hover:text-neonGreen transition flex items-center gap-1.5 font-medium underline">
+            <i class="fa-solid fa-circle-question text-emerald-400"></i>
+            <span>Kaise Join Karein? Complete Guide (Click Here)</span>
+        </button>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-20 w-full glass-panel py-2 px-4 text-center border-t border-slate-800">
+        <p class="text-[10px] sm:text-xs text-slate-400 font-medium">
+            © 2026 EARN WITH HACKII • Official VIP Signals & Trading Link
+        </p>
+    </footer>
+
+    <!-- HELP GUIDE MODAL -->
+    <div id="help-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-md w-full rounded-3xl border border-slate-700 p-5 relative text-left shadow-2xl">
+            <button onclick="toggleHelpModal(false); playClickSound();" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-neonGreen"></i>
+                EARN WITH HACKII - FAQ Guide
+            </h3>
+
+            <div class="space-y-2.5 text-xs text-slate-300 modal-scroll max-h-[60vh] overflow-y-auto pr-1">
+                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+                    <p class="font-bold text-neonGreen mb-1">1. Signals Kitne Accurate Hain?</p>
+                    <p class="text-slate-400">Hamare VIP Channel me 98%+ Accuracy ke sath daily verified trading signals aur verified app loots milte hain.</p>
+                </div>
+
+                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+                    <p class="font-bold text-neonGreen mb-1">2. Kya Join Karne Ke Paise Lagenge?</p>
+                    <p class="text-slate-400">Bilkul nahi! Channel 100% Free hai. Kisi ko koi bhi payment karne ki zaroorat nahi hai.</p>
+                </div>
+
+                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+                    <p class="font-bold text-neonGreen mb-1">3. Earning Direct Kahan Milegi?</p>
+                    <p class="text-slate-400">Aapki sari daily income direct aapke Bank Account, UPI ID (PhonePe / GooglePay / Paytm) me transfer hogi.</p>
+                </div>
+            </div>
+
+            <a href="https://t.me/+mNtpndjOcOsyZWFl" target="_blank" onclick="toggleHelpModal(false); playClickSound();" class="mt-4 w-full py-3 bg-gradient-to-r from-emerald-500 to-tgBlue text-slate-950 font-black text-xs rounded-xl flex items-center justify-center gap-2">
+                <i class="fa-brands fa-telegram text-base"></i>
+                SAMAJH GAYA - JOIN TELEGRAM NOW
+            </a>
+        </div>
+    </div>
+
+    <!-- LIVE SOCIAL PROOF TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-12 left-4 z-40 pointer-events-none space-y-2 max-w-xs"></div>
+
+    <script>
+        // Web Audio API Sound Generator
+        let audioCtx = null;
+        function playClickSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.08); // A5
+
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch(e) {
+                // Audio fallback silence
+            }
+        }
+
+        // Live Countdown Timer
+        let totalSeconds = 298; // 04:58
+        function updateTimer() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const timerEl = document.getElementById('timer-display');
+            if (timerEl) {
+                timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+            if (totalSeconds > 10) totalSeconds--;
+        }
+        setInterval(updateTimer, 1000);
+
+        // Help Modal Toggle
+        function toggleHelpModal(show) {
+            const modal = document.getElementById('help-modal');
+            if (!modal) return;
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        // Interactive Canvas Animation Engine (Glowing Trend Line + Floating Cyber Particles)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+        let chartPoints = [];
+        let chartStep = 0;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+            initChartPoints();
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(width / 20), 45);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    radius: Math.random() * 2 + 1
+                });
+            }
+        }
+
+        function initChartPoints() {
+            chartPoints = [];
+            const segments = 40;
+            const stepX = width / segments;
+            let currentY = height * 0.65;
+
+            for (let i = 0; i <= segments + 5; i++) {
+                const targetY = height * 0.4 + Math.sin(i * 0.4) * 80 + (Math.random() - 0.5) * 40;
+                chartPoints.push({
+                    x: i * stepX,
+                    y: targetY
+                });
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw Background Grid
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.lineWidth = 1;
+            const gridSize = 40;
+            for (let x = 0; x < width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Draw Animated Cyber Particles & Connections
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.fillStyle = 'rgba(0, 255, 136, 0.5)';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dx = p.x - p2.x;
+                    let dy = p.y - p2.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(0, 255, 136, ${0.15 * (1 - dist / 100)})`;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw Dynamic Glowing Trading Line Chart Graph
+            chartStep += 0.8;
+            ctx.save();
+            
+            // Area Fill Under Chart
+            const gradientFill = ctx.createLinearGradient(0, 0, 0, height);
+            gradientFill.addColorStop(0, 'rgba(0, 255, 136, 0.18)');
+            gradientFill.addColorStop(1, 'rgba(0, 255, 136, 0.0)');
+
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+
+            for (let i = 0; i < chartPoints.length - 1; i++) {
+                const pt = chartPoints[i];
+                const nextPt = chartPoints[i + 1];
+                const animX = pt.x - (chartStep % (width / 40));
+                
+                if (i === 0) ctx.lineTo(animX, pt.y);
+                else {
+                    const xc = (animX + (nextPt.x - (chartStep % (width / 40)))) / 2;
+                    const yc = (pt.y + nextPt.y) / 2;
+                    ctx.quadraticCurveTo(animX, pt.y, xc, yc);
+                }
+            }
+
+            ctx.lineTo(width, height);
+            ctx.closePath();
+            ctx.fillStyle = gradientFill;
+            ctx.fill();
+
+            // Chart Stroke Line
+            ctx.beginPath();
+            for (let i = 0; i < chartPoints.length - 1; i++) {
+                const pt = chartPoints[i];
+                const nextPt = chartPoints[i + 1];
+                const animX = pt.x - (chartStep % (width / 40));
+
+                if (i === 0) ctx.moveTo(animX, pt.y);
+                else {
+                    const xc = (animX + (nextPt.x - (chartStep % (width / 40)))) / 2;
+                    const yc = (pt.y + nextPt.y) / 2;
+                    ctx.quadraticCurveTo(animX, pt.y, xc, yc);
+                }
+            }
+
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 3;
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 15;
+            ctx.stroke();
+            ctx.restore();
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            animateCanvas();
+        });
+
+        // Dynamic Live Join & Earnings Proof Toasts
+        const proofEvents = [
+            { name: "Sandeep (Delhi)", msg: "VIP Channel join kiya", badge: "JOINED" },
+            { name: "Rohit Sharma (Mumbai)", msg: "Today Signal se ₹2,400 earn kiya", badge: "PROFIT" },
+            { name: "Anjali Gupta (Kolkata)", msg: "VIP Channel join kiya", badge: "JOINED" },
+            { name: "Mohd. Faisal (Lucknow)", msg: "₹5,100 Withdrawal receive hua", badge: "PROFIT" },
+            { name: "Pooja Verma (Jaipur)", msg: "VIP Channel join kiya", badge: "JOINED" }
+        ];
+
+        function triggerSocialToast() {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const data = proofEvents[Math.floor(Math.random() * proofEvents.length)];
+
+            const toast = document.createElement('div');
+            toast.className = "glass-panel px-3 py-2 rounded-xl border border-emerald-500/50 text-[11px] flex items-center gap-2 shadow-2xl transform -translate-x-full opacity-0 transition-all duration-300 pointer-events-auto";
+            
+            const badgeColor = data.badge === "PROFIT" ? "bg-yellow-500/20 text-yellow-300 border-yellow-500/40" : "bg-emerald-500/20 text-neonGreen border-emerald-500/40";
+
+            toast.innerHTML = `
+                <span class="w-2 h-2 rounded-full bg-neonGreen animate-ping"></span>
+                <div class="flex-1">
+                    <p class="text-white font-bold">${data.name}</p>
+                    <p class="text-slate-300 text-[10px]">${data.msg}</p>
+                </div>
+                <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded border ${badgeColor}">${data.badge}</span>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('-translate-x-full', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('-translate-x-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 400);
+            }, 3200);
+        }
+
+        // Trigger social proof popup every 5.5 seconds
+        setInterval(triggerSocialToast, 5500);
+        setTimeout(triggerSocialToast, 1200);
+    </script>
+</body>
+</html>
